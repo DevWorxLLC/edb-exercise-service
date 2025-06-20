@@ -1,8 +1,8 @@
 import ExpressConfig from './express.config.js';
 
 const app = ExpressConfig();
-const PORT = process.env.PORT ?? 3001;
+const PORT = process.env.PORT ?? 3003;
 
-app.listen(PORT, () => {
-    console.log(`>> Server Running on Port ${PORT} <<`);
+app.listen(Number(PORT), '::', () => {
+    console.log(`>> Server running on [::]${PORT} <<`);
 });

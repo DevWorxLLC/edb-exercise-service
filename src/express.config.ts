@@ -1,9 +1,9 @@
-import { miscRouter } from '@/routes';
 import compression from 'compression';
 import 'dotenv/config';
 import express, { type Application } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import statusRoute from './routes/status';
 
 const ExpressConfig = (): Application => {
     const app = express();
@@ -19,7 +19,7 @@ const ExpressConfig = (): Application => {
     app.use(helmet());
     app.use(morgan('dev'));
 
-    app.use('/misc', miscRouter);
+    app.use(statusRoute);
 
     return app;
 };
