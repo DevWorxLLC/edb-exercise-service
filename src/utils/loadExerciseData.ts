@@ -1,9 +1,11 @@
 import cache from '@/services/cache';
 
-const loadExerciseData = async () => {
-    const exerciseData = (await Bun.file('exerciseData_final.json').json()) as unknown[];
+export const exerciseDataCacheKey = 'exerciseData';
 
-    cache.set('exerciseData', exerciseData);
+const loadExerciseData = async () => {
+    const exerciseData = await Bun.file('exerciseData_final.json').json();
+
+    cache.set(exerciseDataCacheKey, exerciseData);
 
     console.log('>> Cache loaded <<');
 };
