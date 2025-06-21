@@ -4,9 +4,12 @@ import express, { type Application } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import statusRoute from './routes/status';
+import loadExerciseData from './utils/loadExerciseData';
 
-const ExpressConfig = (): Application => {
+const ExpressConfig = async (): Promise<Application> => {
     const app = express();
+
+    await loadExerciseData();
 
     app.use(compression());
     app.use(
