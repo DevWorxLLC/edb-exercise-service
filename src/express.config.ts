@@ -3,6 +3,7 @@ import 'dotenv/config';
 import express, { type Application } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import { exercisesRouter } from './routes/exercises';
 import statusRoute from './routes/status';
 import loadExerciseData from './utils/loadExerciseData';
 
@@ -23,6 +24,7 @@ const ExpressConfig = async (): Promise<Application> => {
     app.use(morgan('dev'));
 
     app.use(statusRoute);
+    app.use('/exercises', exercisesRouter);
 
     return app;
 };
