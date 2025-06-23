@@ -7,7 +7,8 @@
     "dev": "bun --bun --watch src/server.ts ",
     "start": "bun --bun src/server.ts",
     "lint": "eslint --ext .ts src",
-    "lint:fix": "eslint --ext .ts src --fix"
+    "lint:fix": "eslint --ext .ts src --fix",
+    "test": "bun test --coverage"
   },
   "author": "",
   "license": "ISC",
