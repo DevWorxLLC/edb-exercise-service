@@ -1,14 +1,14 @@
 import getExerciseData from '@/utils/getExerciseData';
 import isBasicSubscriber from '@/utils/isBasicSubscriber';
 import sortAndPaginate from '@/utils/sortAndPaginate';
-import bodyPartParam, { type BodyPartParam } from '@/validations/bodyPartParam';
 import defaultQuery, { type DefaultQuery } from '@/validations/defaultQuery';
+import equipmentParam, { type EquipmentParam } from '@/validations/equipmentParam';
 import { Router } from 'express';
 import { matchedData, validationResult } from 'express-validator';
 
-const bodyPartRoute = Router();
+const equipmentRoute = Router();
 
-bodyPartRoute.get('/bodyPart/:bodyPart', ...bodyPartParam, ...defaultQuery, (req, res) => {
+equipmentRoute.get('/equipment/:equipment', ...equipmentParam, ...defaultQuery, (req, res) => {
     try {
         const result = validationResult(req);
 
@@ -19,8 +19,8 @@ bodyPartRoute.get('/bodyPart/:bodyPart', ...bodyPartParam, ...defaultQuery, (req
             return;
         }
 
-        const queryData = matchedData<DefaultQuery & BodyPartParam>(req);
-        const filteredData = getExerciseData().filter((exercise) => exercise.bodyPart === queryData.bodyPart);
+        const queryData = matchedData<DefaultQuery & EquipmentParam>(req);
+        const filteredData = getExerciseData().filter((exercise) => exercise.equipment === queryData.equipment);
 
         const sortedData = sortAndPaginate({
             queryData,
@@ -34,4 +34,4 @@ bodyPartRoute.get('/bodyPart/:bodyPart', ...bodyPartParam, ...defaultQuery, (req
     }
 });
 
-export default bodyPartRoute;
+export default equipmentRoute;
