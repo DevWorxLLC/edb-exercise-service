@@ -4,6 +4,8 @@ export enum SortMethod {
     id = 'id',
     name = 'name',
     target = 'target',
+    difficulty = 'difficulty',
+    category = 'category',
 }
 
 export enum SortOrder {

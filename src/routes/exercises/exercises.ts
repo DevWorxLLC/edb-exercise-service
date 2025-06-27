@@ -1,3 +1,4 @@
+import getExerciseData from '@/utils/getExerciseData';
 import isBasicSubscriber from '@/utils/isBasicSubscriber';
 import sortAndPaginate from '@/utils/sortAndPaginate';
 import defaultQuery from '@/validations/defaultQuery';
@@ -18,6 +19,7 @@ exercisesRoute.get('/', ...defaultQuery, (req, res) => {
         }
 
         const data = matchedData(req);
+        const exerciseData = getExerciseData();
 
         if (isBasicSubscriber(req)) {
             const basicData = sortAndPaginate({
@@ -25,6 +27,7 @@ exercisesRoute.get('/', ...defaultQuery, (req, res) => {
                 sortOrder: data.sortOrder,
                 offset: data.offset,
                 limit: 10,
+                exercises: exerciseData,
             });
 
             res.json(basicData);
@@ -36,11 +39,11 @@ exercisesRoute.get('/', ...defaultQuery, (req, res) => {
             sortOrder: data.sortOrder,
             offset: data.offset,
             limit: data.limit,
+            exercises: exerciseData,
         });
 
         res.status(200).json(premiumData);
     } catch (error) {
-        console.log(error);
         res.status(500).send(error);
     }
 });
