@@ -1,4 +1,13 @@
+import { type SortMethod, type SortOrder } from '@/types/Sort';
 import { query } from 'express-validator';
+
+export type DefaultQuery = {
+    offset: number;
+    limit: number;
+    sortMethod: SortMethod;
+    sortOrder: SortOrder;
+    'rapidapi-key'?: string;
+};
 
 const defaultQuery = [
     query('offset').default(0).isInt().toInt(),

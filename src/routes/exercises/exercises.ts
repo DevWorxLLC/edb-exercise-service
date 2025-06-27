@@ -1,7 +1,7 @@
 import getExerciseData from '@/utils/getExerciseData';
 import isBasicSubscriber from '@/utils/isBasicSubscriber';
 import sortAndPaginate from '@/utils/sortAndPaginate';
-import defaultQuery from '@/validations/defaultQuery';
+import defaultQuery, { type DefaultQuery } from '@/validations/defaultQuery';
 import { Router } from 'express';
 import { matchedData, validationResult } from 'express-validator';
 
@@ -18,31 +18,16 @@ exercisesRoute.get('/', ...defaultQuery, (req, res) => {
             return;
         }
 
-        const data = matchedData(req);
+        const queryData = matchedData<DefaultQuery>(req);
         const exerciseData = getExerciseData();
 
-        if (isBasicSubscriber(req)) {
-            const basicData = sortAndPaginate({
-                sortMethod: data.sortMethod,
-                sortOrder: data.sortOrder,
-                offset: data.offset,
-                limit: 10,
-                exercises: exerciseData,
-            });
-
-            res.json(basicData);
-            return;
-        }
-
-        const premiumData = sortAndPaginate({
-            sortMethod: data.sortMethod,
-            sortOrder: data.sortOrder,
-            offset: data.offset,
-            limit: data.limit,
+        const returnData = sortAndPaginate({
+            queryData,
             exercises: exerciseData,
+            isBasicSubscriber: isBasicSubscriber(req),
         });
 
-        res.status(200).json(premiumData);
+        res.status(200).json(returnData);
     } catch (error) {
         res.status(500).send(error);
     }
