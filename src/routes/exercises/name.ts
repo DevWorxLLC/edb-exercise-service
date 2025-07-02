@@ -1,14 +1,15 @@
+import { type Exercise } from '@/types/Exercise';
 import getExerciseData from '@/utils/getExerciseData';
 import isBasicSubscriber from '@/utils/isBasicSubscriber';
 import sortAndPaginate from '@/utils/sortAndPaginate';
-import bodyPartParam, { type BodyPartParam } from '@/validations/bodyPartParam';
 import defaultQuery, { type DefaultQuery } from '@/validations/defaultQuery';
+import nameParam, { type NameParam } from '@/validations/nameParam';
 import { Router } from 'express';
 import { matchedData, validationResult } from 'express-validator';
 
-const bodyPartRoute = Router();
+const nameRoute = Router();
 
-bodyPartRoute.get('/bodyPart/:bodyPart', ...bodyPartParam, ...defaultQuery, (req, res) => {
+nameRoute.get('/name/:name', ...defaultQuery, ...nameParam, (req, res) => {
     try {
         const result = validationResult(req);
 
@@ -19,12 +20,24 @@ bodyPartRoute.get('/bodyPart/:bodyPart', ...bodyPartParam, ...defaultQuery, (req
             return;
         }
 
-        const queryData = matchedData<DefaultQuery & BodyPartParam>(req);
-        const filteredData = getExerciseData().filter((exercise) => exercise.bodyPart === queryData.bodyPart);
+        const data = matchedData<DefaultQuery & NameParam>(req);
+
+        const exerciseData = getExerciseData();
+        const matches: Exercise[] = [];
+
+        for (let j = 0; j < exerciseData.length; j++) {
+            const exerciseName = exerciseData[j].name;
+            const exercise = exerciseData[j];
+            const isMatch = exerciseName.includes(data.name);
+
+            if (isMatch) {
+                matches.push(exercise);
+            }
+        }
 
         const sortedData = sortAndPaginate({
-            queryData,
-            exercises: filteredData,
+            queryData: data,
+            exercises: matches,
             isBasicSubscriber: isBasicSubscriber(req),
         });
 
@@ -34,4 +47,4 @@ bodyPartRoute.get('/bodyPart/:bodyPart', ...bodyPartParam, ...defaultQuery, (req
     }
 });
 
-export default bodyPartRoute;
+export default nameRoute;
