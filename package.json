@@ -1,6 +1,6 @@
 {
-  "name": "express-ts-starter",
-  "version": "1.0.0",
+  "name": "edb-exercise-service",
+  "version": "2.2.0",
   "description": "",
   "main": "src/server.ts",
   "scripts": {
