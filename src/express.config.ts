@@ -7,10 +7,10 @@ import { exercisesRouter } from './routes/exercises';
 import statusRoute from './routes/status';
 import loadExerciseData from './utils/loadExerciseData';
 
-const ExpressConfig = async (): Promise<Application> => {
+const ExpressConfig = (): Application => {
     const app = express();
 
-    await loadExerciseData();
+    loadExerciseData();
 
     app.use(compression());
     app.use(

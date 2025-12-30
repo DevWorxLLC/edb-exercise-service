@@ -4,11 +4,10 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "dev": "bun --bun --watch src/server.ts ",
-    "start": "bun --bun src/server.ts",
+    "dev": "tsx watch src/server.ts ",
+    "start": "tsx src/server.ts",
     "lint": "eslint --ext .ts src",
-    "lint:fix": "eslint --ext .ts src --fix",
-    "test": "bun test --coverage"
+    "lint:fix": "eslint --ext .ts src --fix"
   },
   "author": "",
   "license": "ISC",
@@ -19,7 +18,8 @@
     "express-validator": "^7.3.1",
     "helmet": "^7.2.0",
     "morgan": "^1.10.1",
-    "node-cache": "^5.1.2"
+    "node-cache": "^5.1.2",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
     "@types/compression": "^1.8.1",

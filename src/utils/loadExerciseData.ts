@@ -1,9 +1,10 @@
 import cache from '@/services/cache';
+import fs from 'node:fs';
 
 export const exerciseDataCacheKey = 'exerciseData';
 
-const loadExerciseData = async () => {
-    const exerciseData = await Bun.file('exerciseData_final.json').json();
+const loadExerciseData = () => {
+    const exerciseData = JSON.parse(fs.readFileSync('exerciseData_final.json', 'utf8'));
 
     cache.set(exerciseDataCacheKey, exerciseData);
 
